@@ -19,5 +19,5 @@ export class User extends BaseEntity {
 	password: string
 
 	@OneToMany((_type) => Task, (task) => task.user, { eager: true })
-	task: Task[]
+	tasks: Task[]
 }
