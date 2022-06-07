@@ -4,7 +4,7 @@ import { createTaskDto } from './dto/create-task.dto'
 import { GetTasksFilterDto } from './dto/get-task-filter.dto'
 import { TaskStatus } from './task-status.enum'
 import { Task } from './task.entity'
-import { Logger } from '@nestjs/common'
+import { InternalServerErrorException, Logger } from '@nestjs/common'
 
 @EntityRepository(Task)
 export class TaskRepository extends Repository<Task> {
@@ -31,9 +31,11 @@ export class TaskRepository extends Repository<Task> {
 			return tasks
 		} catch (error) {
 			this.logger.error(
-				`Failed to get task for user "${user.username}. Filter: ${JSON.stringify(filterDto)}"`,
-				error.stack
-			);
+				`Failed to get task for user "${
+					user.username
+				}. Filter: ${JSON.stringify(filterDto)}"`,
+				error.stack,
+			)
 			throw new InternalServerErrorException()
 		}
 	}

@@ -4,12 +4,10 @@ import {
 	Delete,
 	Get,
 	Param,
-	ParseIntPipe,
 	Patch,
 	Post,
 	Query,
 	UseGuards,
-	UsePipes,
 	ValidationPipe,
 } from '@nestjs/common'
 import { AuthGuard } from '@nestjs/passport'
@@ -34,7 +32,11 @@ export class TasksController {
 		@Query(ValidationPipe) filterDto: GetTasksFilterDto,
 		@GetUser() user: User,
 	): Promise<Task[]> {
-		this.logger.verbose(`User "${user.username}" is retrieving all tasks. filter ${JSON.stringify(filterDto)}`)
+		this.logger.verbose(
+			`User "${user.username}" is retrieving all tasks. filter ${JSON.stringify(
+				filterDto,
+			)}`,
+		)
 		return this.tasksService.getTasks(filterDto, user)
 	}
 
@@ -49,7 +51,11 @@ export class TasksController {
 		@Body() body: createTaskDto,
 		@GetUser() user: User,
 	): Promise<Task> {
-		this.logger.verbose(`User "${user.username}" is creating a new task. data ${JSON.stringify(body)}`)
+		this.logger.verbose(
+			`User "${user.username}" is creating a new task. data ${JSON.stringify(
+				body,
+			)}`,
+		)
 		return this.tasksService.createTask(body, user)
 	}
 
